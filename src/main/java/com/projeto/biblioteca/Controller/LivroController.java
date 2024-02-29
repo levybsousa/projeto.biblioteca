@@ -1,6 +1,7 @@
 package com.projeto.biblioteca.Controller;
 
 import com.projeto.biblioteca.model.entity.Livro;
+import com.projeto.biblioteca.service.LivroService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class LivroController {
+
+    private final LivroService livroService;
 
     @GetMapping
     public ResponseEntity<List<Livro>> getAll() {
@@ -29,12 +32,12 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> update(@PathVariable Long Id, @RequestBody Livro livro){
+    public ResponseEntity<Livro> update(@PathVariable Long Id, @RequestBody Livro livro) {
         return null;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         return null;
     }
 }
