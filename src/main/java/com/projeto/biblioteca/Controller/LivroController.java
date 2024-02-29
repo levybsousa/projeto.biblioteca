@@ -18,26 +18,31 @@ public class LivroController {
 
     @GetMapping
     public ResponseEntity<List<Livro>> getAll() {
-        return null;
+        List<Livro> livroResponse = livroService.getAll();
+        return ResponseEntity.ok(livroResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Livro> getById(@PathVariable Long Id) {
-        return null;
+    public ResponseEntity<Livro> getById(@PathVariable Long id) {
+        Livro livroResponse = livroService.getById(id);
+        return ResponseEntity.ok(livroResponse);
     }
 
     @PostMapping
-    public ResponseEntity<Livro> save(@PathVariable Long Id, @RequestBody Livro livro) {
-        return null;
+    public ResponseEntity<Livro> save(@RequestBody Livro livro) {
+        Livro livroResponse = livroService.save(livro);
+        return ResponseEntity.ok(livroResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> update(@PathVariable Long Id, @RequestBody Livro livro) {
-        return null;
+    public ResponseEntity<Livro> update(@PathVariable Long id, @RequestBody Livro livro) {
+        Livro livroResponse = livroService.update(id, livro);
+        return ResponseEntity.ok(livroResponse);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        return null;
+        livroService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
