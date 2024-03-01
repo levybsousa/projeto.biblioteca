@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "usuario")
 @Entity
 @NoArgsConstructor
-public class userEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
