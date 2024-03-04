@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.HttpSecurityDsl;
 import org.springframework.security.config.annotation.web.SecurityMarker;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,17 +23,25 @@ import org.springframework.security.web.SecurityFilterChain;
 
 public class SecurityConfig {
 
+    private JwtAuthEntryPoint authEntryPoint;
     private CustomUserDetailService userDetailService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailService userDetailService) {
+    public SecurityConfig(CustomUserDetailService userDetailService, JwtAuthEntryPoint authEntryPoint) {
         this.userDetailService = userDetailService;
+        this.authEntryPoint = authEntryPoint;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurityDsl http) throws Exception {
         http
                 .csrf().disabled()
+                .exceptionHandLing()
+                .authenticationEntryPoint(authEntryPoint)
+                .and()
+                .sessionManagment()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizedRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .anyRequests().authenticated()
@@ -49,7 +58,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
 
     }
