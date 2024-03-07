@@ -1,7 +1,9 @@
 package com.projeto.biblioteca.model.entity;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
