@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Livro {
+public class LivroEntity {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "livro_sequence")

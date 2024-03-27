@@ -1,16 +1,13 @@
 package com.projeto.biblioteca.service;
 
 import com.projeto.biblioteca.exception.RecursoNaoEncontradoException;
-import com.projeto.biblioteca.model.entity.Livro;
+import com.projeto.biblioteca.model.entity.LivroEntity;
 import com.projeto.biblioteca.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @RequiredArgsConstructor
@@ -18,13 +15,13 @@ public class LivroService {
 
     private final LivroRepository livroRepository;
 
-    public List<Livro> getAll() {
-        List<Livro> result = livroRepository.findAll();
+    public List<LivroEntity> getAll() {
+        List<LivroEntity> result = livroRepository.findAll();
         return result;
     }
 
-    public Livro getById(Long id) {
-        Optional<Livro> result = livroRepository.findById(id);
+    public LivroEntity getById(Long id) {
+        Optional<LivroEntity> result = livroRepository.findById(id);
         if (result.isPresent()) {
             return result.get();
         } else {
@@ -32,28 +29,37 @@ public class LivroService {
         }
     }
 
-    public Livro save(Livro livro) {
+    public LivroEntity save(LivroEntity livroEntity) {
 
-        Optional<Livro> livroFromDataBase = livroRepository.getLivroByNome(livro.getNome());
+        Optional<LivroEntity> livroFromDataBase = livroRepository.getLivroByNome(livroEntity.getNome());
 
         if (livroFromDataBase.isPresent()) {
             throw new RecursoNaoEncontradoException();
         }
-        Livro result = livroRepository.save(livro);
+        LivroEntity result = livroRepository.save(livroEntity);
         return result;
     }
-    public Livro update(Long id, Livro livro) {
+
+    public LivroEntity update(Long id, LivroEntity livroEntity) {
         this.getById(id);
 
-        Optional<Livro> livroFromDataBase = livroRepository.getLivroByNome(livro.getNome());
+        Optional<LivroEntity> livroFromDataBase = livroRepository.getLivroByNome(livroEntity.getNome());
 
-        Livro result = livroRepository.save(livro);
+        LivroEntity result = livroRepository.save(livroEntity);
         return result;
     }
 
-    public void delete(Long id)  {
+    public void delete(Long id) {
         getById(id);
         livroRepository.deleteById(id);
+    }
+
+    public String emprestarLivro(String nomeLivro) {
+         Optional<LivroEntity> livro = livroRepository.getLivroByNome(nomeLivro);
+        if (!livro.isPresent()) {
+            return "O livro não existe";
+        }
+        return "O livro alugado com sucesso";
     }
 }
 

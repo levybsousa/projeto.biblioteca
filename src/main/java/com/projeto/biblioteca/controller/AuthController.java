@@ -1,9 +1,9 @@
-package com.projeto.biblioteca.Controller;
+package com.projeto.biblioteca.controller;
 
 import com.projeto.biblioteca.model.dto.AuthResponseDto;
 import com.projeto.biblioteca.model.dto.LoginDto;
 import com.projeto.biblioteca.model.dto.RegisterDto;
-import com.projeto.biblioteca.model.entity.Role;
+import com.projeto.biblioteca.model.entity.RoleEntity;
 import com.projeto.biblioteca.model.entity.UserEntity;
 import com.projeto.biblioteca.repository.RoleRepository;
 import com.projeto.biblioteca.repository.UserRepository;
@@ -60,11 +60,11 @@ public class AuthController {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
         UserEntity user = new UserEntity();
-        user.setUserName(registerDto.getUsername());
+        user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        Role roles = roleRepository.findByName("USER").get();
-        user.setRoles(Collections.singletonList(roles));
+        RoleEntity roles = roleRepository.findByName("USER").get();
+        user.setRoleEntities(Collections.singletonList(roles));
 
         userRepository.save(user);
 
